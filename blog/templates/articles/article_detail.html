@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  <title>article detail</title>
+{% endblock title %}
+  
+{% block content %}
+
+<div class="container">
+  <h1>{{ object.title }}</h1>
+  <p>{{ object.content }}</p>
+
+  {% if request.user.is_authenticated %}
+    
+    <p><a class="btn btn-outline-primary" href="{% url 'articles:article-update' object.id %}">Edit</a></p>
+    <p><a class="btn btn-outline-danger" href="{% url 'articles:article-delete' object.id %}">Delete</a></p>
+    
+  {% endif %}
+
+</div>
+
+{% endblock %}

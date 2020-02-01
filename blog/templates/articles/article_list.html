@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  <title>article list</title>
+{% endblock title %}
+  
+{% block content %}
+  
+  <div class="container">
+    {% if request.user.is_authenticated %}
+      <p><a 
+          class="btn btn-outline-primary"
+          href="{% url 'articles:article-create' %}"
+        >
+          Create
+        </a>
+      </p>
+    {% endif %}
+
+    {% for object in object_list %}
+         <p>{{ object.id }} - <a href='{{ object.get_absolute_url }}'>{{ object.title }}</a> {{ number }} - {{ today }} - {{ object.all_attrs}} </p>
+    {% endfor %}
+  </div>
+
+{% endblock %} 
