@@ -71,6 +71,7 @@ class ArticleDetailView(DetailView):
 
     def get_object(self):
         id_ = self.kwargs.get("id")
+        print(f"self.kwargs: {self.kwargs}")
         return get_object_or_404(Article, id=id_)
 
 
