@@ -54,7 +54,7 @@ class ArticleListView(ListView):
     # queryset = Article.objects.all()  # <blog>/<modelname>_list.html
 
     def get_queryset(self):
-        return Article.objects.all()
+        return Article.objects.all()[::-1]
 
     # them logic dung ngoai template {{ today }}, {{ number }}
     def get_context_data(self, **kwargs):
