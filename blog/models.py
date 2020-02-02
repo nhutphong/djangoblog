@@ -7,6 +7,9 @@ class Article(models.Model):
     content = models.TextField()
     active = models.BooleanField(default=True)
 
+    def __str__(self):
+        return f"{self.title} - {self.id}"
+
     # dung ngoai template, redirect cho CreateView
     def get_absolute_url(self):
         return reverse("articles:article-detail", kwargs={"id": self.id})
