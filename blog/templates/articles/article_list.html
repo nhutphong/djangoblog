@@ -17,8 +17,8 @@
       </p>
     {% endif %}
 
-    {% for object in object_list %}
-         <p>{{ object.id }} - <a href='{{ object.get_absolute_url }}'>{{ object.title }}</a> {{ number }} - {{ today }} - {{ object.all_attrs}} </p>
+    {% for article in article_list %}
+         <p>{{ article.id }} - <a href='{{ article.get_absolute_url }}'>{{ article.title }}</a> {{ number }} - {{ today }} - {{ article.all_attrs}} </p>
     {% endfor %}
   </div>
 

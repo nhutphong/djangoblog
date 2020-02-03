@@ -51,6 +51,7 @@ class ArticleListView(ListView):
     # queryset <=> get_context_data(self)
 
     template_name = 'articles/article_list.html'
+    context_object_name = 'article_list'
     # queryset = Article.objects.all()  # <blog>/<modelname>_list.html
 
     def get_queryset(self):
@@ -67,6 +68,7 @@ class ArticleListView(ListView):
 
 class ArticleDetailView(DetailView):
     template_name = 'articles/article_detail.html'
+    context_object_name = 'article'
     #queryset = Article.objects.all()
 
     def get_object(self):
