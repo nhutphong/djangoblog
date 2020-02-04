@@ -9,11 +9,10 @@ from django.utils.decorators import method_decorator
 from django.utils import timezone
 
 from django.views.generic import (
-    CreateView,
+    ListView,
     DetailView,
-    ListView,
+    CreateView,
     UpdateView,
-    ListView,
     DeleteView
 )
 
