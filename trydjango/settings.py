@@ -28,7 +28,8 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 if DEBUG:
-    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' # During development only
+    # During development only
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 
 # Application definition
@@ -87,10 +88,18 @@ WSGI_APPLICATION = 'trydjango.wsgi.application'
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
 DATABASES = {
-     'default': {
+    'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql',
+    #     'NAME': 'djangoblog',
+    #     'USER': 'root',
+    #     'PASSWORD': '12341234',
+    #     'HOST': 'localhost',
+    #     'PORT': '5432',
+    # }
 }
 
 
@@ -133,17 +142,18 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'assets')
 
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'),]
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'), ]
 
 # lưu media upload
-MEDIA_URL = "/media/" #url trên browser
-MEDIA_ROOT = os.path.join(BASE_DIR, "media") #local name trong project, tên 'media' có thể đổi tùy ý
+MEDIA_URL = "/media/"  # url trên browser
+# local name trong project, tên 'media' có thể đổi tùy ý
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
-#required
+# required
 LOGIN_URL = '/accounts/login/'
 
 #LoginView, LogoutView
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
-CRISPY_TEMPLATE_PACK="bootstrap4"
+CRISPY_TEMPLATE_PACK = "bootstrap4"

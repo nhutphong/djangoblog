@@ -44,17 +44,18 @@ class ArticleDetailView(DetailView):
     template_name = 'articles/article_detail.html'
     context_object_name = 'article'
     #queryset = Article.objects.all()
+    query_pk_and_slug = True
 
     def get_object(self):
-        id_ = self.kwargs.get("id")
+        slug = self.kwargs.get("slug")
         print(f"self.kwargs: {self.kwargs}")
-        return get_object_or_404(Article, id=id_)
+        return get_object_or_404(Article, slug=slug)
 
 
 # @method_decorator(login_required, name='dispatch')
 class ArticleCreateView(LoginRequiredMixin, CreateView):
-    #yeu cau dang nhap moi run dc ArticleCreateView
-    #thua ke tu LoginRequiredMixin
+    # yeu cau dang nhap moi run dc ArticleCreateView
+    # thua ke tu LoginRequiredMixin
     # login_url = '/accounts/login/'
     # redirect_field_name = 'next'
 
@@ -95,7 +96,7 @@ class ArticleUpdateView(LoginRequiredMixin, UpdateView):
         return super().form_valid(form)
 
 
-#yeu cau dang nhap moi run dc ArticleDeleteView
+# yeu cau dang nhap moi run dc ArticleDeleteView
 @method_decorator(login_required, name='dispatch')
 class ArticleDeleteView(DeleteView):
     template_name = 'articles/article_delete.html'

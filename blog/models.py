@@ -1,18 +1,25 @@
 from django.db import models
 from django.urls import reverse
+from django.utils.text import slugify
 
 
 class Article(models.Model):
     title = models.CharField(max_length=120)
     content = models.TextField()
     active = models.BooleanField(default=True)
+    slug = models.SlugField(null=False, unique=True)
 
     def __str__(self):
         return f"{self.title} - {self.id}"
 
     # dung ngoai template, redirect cho CreateView
     def get_absolute_url(self):
-        return reverse("articles:article-detail", kwargs={"id": self.id})
+        return reverse("articles:article-detail", kwargs={"slug": self.slug})
+
+    def save(self, *args, **kwargs):  # new
+        if not self.slug:
+            self.slug = slugify(self.title)
+        return super().save(*args, **kwargs)
 
     def join_title_content(self):
         return self.title + ' ' + self.content
