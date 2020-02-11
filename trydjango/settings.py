@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     # three
     'bootstrap4',
     'crispy_forms',
+    'bootstrap_pagination',
 
     # local
     'pages',

@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load bootstrap_pagination %}
+
+{% block title %}
+<title>article list</title>
+{% endblock title %}
+
+{% block content %}
+
+<div class="container">
+  {% if request.user.is_authenticated %}
+  <p><a class="btn btn-outline-primary" href="{% url 'articles:article-create' %}">
+      Create
+    </a>
+  </p>
+  {% endif %}
+
+  {% for article in page_obj %}
+  <a href="{{ article.get_absolute_url }}">
+    {{ article.id }} - {{ article.title|upper }}
+  </a>
+  <br>
+  {% endfor %}
+
+  <div class="d-flex justify-content-center">
+
+    {% bootstrap_paginate page_obj range=3 %}
+  </div>
+
+</div>
+
+{% endblock %}

@@ -20,6 +20,14 @@ from .forms import ArticleModelForm
 from .models import Article
 
 
+class PaginationListView(ListView):
+    template_name = 'articles/pagination_list.html'
+    paginate_by = 3
+
+    def get_queryset(self):
+        return Article.objects.all()[::-1]
+
+
 class ArticleListView(ListView):
     # cac attrs class co nhieu methods tuong ung de thuc hien nhieu login hon
     # queryset <=> get_context_data(self)
@@ -65,11 +73,11 @@ class ArticleCreateView(LoginRequiredMixin, CreateView):
     #success_url = '/'
 
     def form_valid(self, form):
-        print(form.cleaned_data)
+        print(f"form.cleaned_data: {form.cleaned_data}")
 
-        #form.instance.content = Article.content
-        form.instance.content = 'da changed from form_valid(self, form)'
-        print(form.cleaned_data)
+        #form.instance.content = article.content
+        #article.content = 'da changed from form_valid(self, form)'
+        # form.instance.content = 'da changed from form_valid(self, form)'
 
         return super().form_valid(form)
 
