@@ -16,10 +16,13 @@
   {% endif %}
 
   {% for article in page_obj %}
-  <a href="{{ article.get_absolute_url }}">
-    {{ article.id }} - {{ article.title|upper }}
-  </a>
-  <br>
+  <div class="card">
+    <div class="card-body">
+      <a href="{{ article.get_absolute_url }}">
+        {{ article.id }} - {{ article.title }}
+      </a>
+    </div>
+  </div>
   {% endfor %}
 
   <div class="d-flex justify-content-center">
