@@ -22,7 +22,7 @@ from .models import Article
 
 class PaginationListView(ListView):
     template_name = 'articles/pagination_list.html'
-    paginate_by = 3
+    paginate_by = 5
 
     def get_queryset(self):
         return Article.objects.all()[::-1]
