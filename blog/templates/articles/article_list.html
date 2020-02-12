@@ -7,15 +7,17 @@
 {% block content %}
   
   <div class="container">
+
     {% if request.user.is_authenticated %}
-      <p><a 
-          class="btn btn-outline-primary"
-          href="{% url 'articles:article-create' %}"
-        >
-          Create
-        </a>
-      </p>
-    {% endif %}
+    <p>
+      <a 
+        class="btn btn-outline-primary"
+        href="{% url 'articles:article-create' %}"
+      >
+        Create
+      </a>
+    </p>
+  {% endif %}
 
     {% for article in article_list %}
          <p>{{ article.id }} - <a href='{{ article.get_absolute_url }}'>{{ article.title }}</a> {{ number }} - {{ today }} - {{ article.all_attrs}} </p>

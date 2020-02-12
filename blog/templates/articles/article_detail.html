@@ -20,14 +20,14 @@
         
         <a
          class="btn btn-outline-primary" 
-         href="{% url 'articles:article-update' article.id %}"
+         href="{% url 'articles:article-update' article.slug %}"
          >
           Edit
         </a>
 
         <a 
           class="btn btn-outline-danger" 
-          href="{% url 'articles:article-delete' article.id %}"
+          href="{% url 'articles:article-delete' article.slug %}"
         >
           Delete
         </a>

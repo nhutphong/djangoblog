@@ -1,6 +1,7 @@
 import random
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse, reverse_lazy
+from django.db.models import Q # new
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
@@ -56,6 +57,7 @@ class ArticleDetailView(DetailView):
 
     def get_object(self):
         slug = self.kwargs.get("slug")
+        print("Tao la ArticleDetailView")
         print(f"self.kwargs: {self.kwargs}")
         return get_object_or_404(Article, slug=slug)
 
@@ -94,10 +96,12 @@ class ArticleUpdateView(LoginRequiredMixin, UpdateView):
 
     template_name = 'articles/article_create.html'
     form_class = ArticleModelForm
+    query_pk_and_slug = True
 
     def get_object(self):
-        id_ = self.kwargs.get("id")
-        return get_object_or_404(Article, id=id_)
+        slug = self.kwargs.get("slug")
+        # return get_object_or_404(Article, id=id_)
+        return get_object_or_404(Article, slug=slug)
 
     def form_valid(self, form):
         print(form.cleaned_data)
@@ -109,10 +113,29 @@ class ArticleUpdateView(LoginRequiredMixin, UpdateView):
 class ArticleDeleteView(DeleteView):
     template_name = 'articles/article_delete.html'
     # success_url = reverse_lazy('articles:article-list')
+    query_pk_and_slug = True
 
     def get_object(self):
-        id_ = self.kwargs.get("id")
-        return get_object_or_404(Article, id=id_)
+        slug = self.kwargs.get("slug")
+        # return get_object_or_404(Article, id=id_)
+        return get_object_or_404(Article, slug=slug)
 
     def get_success_url(self):
         return reverse('articles:article-list')
+
+
+class SearchResultsView(PaginationListView, ListView):
+    
+    model = Article
+    template_name = 'articles/search_results.html'
+    context_object_name = 'article_list'
+
+    def get_queryset(self):
+        print("Tao la SearchResultsView START")
+        query = self.request.GET.get('q')
+        object_list = Article.objects.filter(
+            Q(title__icontains=query) | 
+            Q(content__icontains=query)
+        )
+        print(f"Tao la SearchResultsView END {self.request.GET.get}")
+        return object_list

@@ -5,11 +5,10 @@ from .views import (
     ArticleCreateView,
     ArticleDeleteView,
     ArticleDetailView,
-    PaginationListView,
     ArticleListView,
     ArticleUpdateView,
-
-
+    PaginationListView,
+    SearchResultsView,
 )
 
 app_name = 'articles'
@@ -17,15 +16,17 @@ urlpatterns = [
     path('pagination/', PaginationListView.as_view(), name='pagination-list'),
     path('', ArticleListView.as_view(), name='article-list'),
     path('create/', ArticleCreateView.as_view(), name='article-create'),
+    path('timkiem/', SearchResultsView.as_view(), name='search-results'),
     path('<slug:slug>/', ArticleDetailView.as_view(), name='article-detail'),
     path(
-        '<int:id>/update/',
+        '<slug:slug>/update/',
         ArticleUpdateView.as_view(),
         name='article-update'
     ),
     path(
-        '<int:id>/delete/',
+        '<slug:slug>/delete/',
         ArticleDeleteView.as_view(),
         name='article-delete'
-    ),
+    )
+    
 ]
