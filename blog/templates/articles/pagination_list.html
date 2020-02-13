@@ -9,6 +9,17 @@
 
 <div class="container">
 
+  {% if request.user.is_authenticated %}
+    <p>
+      <a 
+        class="btn btn-outline-primary"
+        href="{% url 'articles:article-create' %}"
+      >
+        Create
+      </a>
+    </p>
+  {% endif %}
+
   {% for article in page_obj %}
   <div class="card">
     <div class="card-body">
