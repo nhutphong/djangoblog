@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 from django.urls import reverse
 from django.utils.text import slugify
 
@@ -6,6 +7,18 @@ from django.utils.text import slugify
 class Article(models.Model):
     title = models.CharField(max_length=120)
     content = models.TextField()
+    author = models.ForeignKey(
+        User, 
+        on_delete=models.CASCADE,
+        related_name='articles'
+    )
+    upload = models.ImageField(
+        upload_to='uploads/%Y/%m/%d/',
+        height_field=None,
+        width_field=None, 
+        max_length=None
+    )
+    created_on = models.DateTimeField(auto_now_add=True)
     active = models.BooleanField(default=True)
     slug = models.SlugField(null=False, unique=True)
 
