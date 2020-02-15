@@ -10,15 +10,18 @@ class Article(models.Model):
     author = models.ForeignKey(
         User, 
         on_delete=models.CASCADE,
-        related_name='articles'
+        related_name='articles',
+        null=True
     )
-    upload = models.ImageField(
-        upload_to='uploads/%Y/%m/%d/',
-        height_field=None,
-        width_field=None, 
-        max_length=None
+    picture = models.ImageField(
+        upload_to='pictures/%Y/%m/%d/',
+        max_length=255,
+        blank=True,
+        null=True
     )
-    created_on = models.DateTimeField(auto_now_add=True)
+    created_on = models.DateTimeField(
+        auto_now_add=True,
+        )
     active = models.BooleanField(default=True)
     slug = models.SlugField(null=False, unique=True)
 
