@@ -5,17 +5,21 @@ from django.utils.text import slugify
 
 
 class Article(models.Model):
-    title = models.CharField(max_length=120)
-    content = models.TextField()
+    title = models.CharField(max_length=255)
+    content = models.TextField(
+        #verbose_name = 'article.content',
+        blank=True,
+        null=True
+
+        )
     author = models.ForeignKey(
         User, 
         on_delete=models.CASCADE,
         related_name='articles',
         null=True
     )
-    picture = models.ImageField(
+    picture = models.FileField(
         upload_to='pictures/%Y/%m/%d/',
-        max_length=255,
         blank=True,
         null=True
     )
@@ -30,6 +34,7 @@ class Article(models.Model):
 
     # dung ngoai template, redirect cho CreateView
     def get_absolute_url(self):
+        print(f"Tao la Article.get_absolute_url(self)")
         return reverse("articles:article-detail", kwargs={"slug": self.slug})
 
     def save(self, *args, **kwargs):  # new

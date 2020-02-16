@@ -3,7 +3,7 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse, reverse_lazy
 from django.db.models import Q # new
 
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 
@@ -26,6 +26,7 @@ class PaginationListView(ListView):
     paginate_by = 5
 
     def get_queryset(self):
+        print("Tao la PaginationListView.get_queryset(self)")
         return Article.objects.all()[::-1]
 
 
@@ -75,7 +76,7 @@ class ArticleCreateView(LoginRequiredMixin, CreateView):
     #success_url = '/'
 
     def form_valid(self, form):
-        print(f"form.cleaned_data: {form.cleaned_data}")
+        print(f"ArticleCreateView.form_valid(self): form.cleaned_data: {form.cleaned_data}")
 
         #form.instance.content = article.content
         #article.content = 'da changed from form_valid(self, form)'
@@ -89,7 +90,7 @@ class ArticleCreateView(LoginRequiredMixin, CreateView):
 
 # dung cho class base view
 # @method_decorator(login_required, name='dispatch')
-class ArticleUpdateView(LoginRequiredMixin, UpdateView):
+class ArticleUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
     # login_url = '/accounts/login/'
     # redirect_field_name = 'next'
@@ -106,11 +107,18 @@ class ArticleUpdateView(LoginRequiredMixin, UpdateView):
     def form_valid(self, form):
         print(form.cleaned_data)
         return super().form_valid(form)
+    
+    #UserPassesTestMixin
+    def test_func(self):
+        print("test_func(self)")
+        obj = self.get_object()
+        print(f"self.get_object(): {obj}")
+        return obj.author == self.request.user
 
 
 # yeu cau dang nhap moi run dc ArticleDeleteView
 @method_decorator(login_required, name='dispatch')
-class ArticleDeleteView(DeleteView):
+class ArticleDeleteView(UserPassesTestMixin, DeleteView):
     template_name = 'articles/article_delete.html'
     # success_url = reverse_lazy('articles:article-list')
     query_pk_and_slug = True
@@ -122,6 +130,11 @@ class ArticleDeleteView(DeleteView):
 
     def get_success_url(self):
         return reverse('articles:article-list')
+    
+    #UserPassesTestMixin
+    def test_func(self):
+        obj = self.get_object()
+        return obj.author == self.request.user
 
 
 class SearchResultsView(PaginationListView, ListView):
