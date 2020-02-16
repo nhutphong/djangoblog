@@ -9,8 +9,6 @@ class Article(models.Model):
     content = models.TextField(
         #verbose_name = 'article.content',
         blank=True,
-        null=True
-
         )
     author = models.ForeignKey(
         User, 
