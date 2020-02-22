@@ -25,7 +25,7 @@ class Article(models.Model):
         auto_now_add=True,
         )
     active = models.BooleanField(default=True)
-    slug = models.SlugField(null=False, unique=True)
+    slug = models.SlugField(max_length=255, null=False, unique=True)
 
     def __str__(self):
         return f"{self.title} - {self.id}"
@@ -39,6 +39,12 @@ class Article(models.Model):
         if not self.slug:
             self.slug = slugify(self.title)
         return super().save(*args, **kwargs)
+    
+    @property
+    def picture_url(self):
+        if self.picture:
+            return self.picture.url
+        return '#'
 
     def join_title_content(self):
         return self.title + ' ' + self.content
