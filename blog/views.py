@@ -78,9 +78,8 @@ class ArticleCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         print(f"ArticleCreateView.form_valid(self): form.cleaned_data: {form.cleaned_data}")
 
-        #form.instance.content = article.content
-        #article.content = 'da changed from form_valid(self, form)'
-        # form.instance.content = 'da changed from form_valid(self, form)'
+        #update article author is current user logged
+        form.instance.author = self.request.user
 
         return super().form_valid(form)
 
