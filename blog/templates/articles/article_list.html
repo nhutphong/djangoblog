@@ -20,7 +20,12 @@
   {% endif %}
 
     {% for article in article_list %}
-         <p>{{ article.id }} - <a href='{{ article.get_absolute_url }}'>{{ article.title }}</a> {{ number }} - {{ today }} - {{ article.all_attrs}} </p>
+        <p>{{ article.id }} - 
+          <a href='{{ article.get_absolute_url }}'>
+           {{ article.title }}
+          </a> 
+          {{ number }} - {{ today }}
+        </p>
     {% endfor %}
   </div>
 
