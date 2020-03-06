@@ -13,8 +13,8 @@
 
   {% if request.user.is_authenticated %}
     
-    <p><a class="btn btn-outline-primary" href="{% url 'products:product-update' object.id %}">Edit</a></p>
-    <p><a class="btn btn-outline-danger" href="{% url 'products:product-delete' object.id %}">Delete</a></p>
+    <p><a class="btn btn-outline-primary" href="{% url 'products:product-update' object.slug %}">Edit</a></p>
+    <p><a class="btn btn-outline-danger" href="{% url 'products:product-delete' object.slug %}">Delete</a></p>
   
   {% endif %}
 

@@ -1,8 +1,15 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
-
+# from django.contrib.auth.decorators import user_passes_test
 from .forms import ProductForm
 from .models import Product
+
+
+# def permission_of_user_for_posts(request,**kwargs):
+#     product = get_object_or_404(Product, slug=request.GET.get('slug'))
+#     if request.user.username == product.author:
+#         return True
+#     return False
 
 
 def product_list_view(request):
@@ -13,8 +20,8 @@ def product_list_view(request):
     return render(request, "products/product_list.html", context)
 
 
-def product_detail_view(request, id):
-    product = get_object_or_404(Product, id=id)
+def product_detail_view(request, slug):
+    product = get_object_or_404(Product, slug=slug)
     context = {
         "object": product
     }
@@ -33,8 +40,9 @@ def product_create_view(request):
 
 
 @login_required
-def product_update_view(request, id):
-    product = get_object_or_404(Product, id=id)
+# @user_passes_test(permission_of_user_for_posts)
+def product_update_view(request, slug):
+    product = get_object_or_404(Product, slug=slug)
     form = ProductForm(request.POST or None, instance=product)
     if form.is_valid():
         form.save()
@@ -46,8 +54,9 @@ def product_update_view(request, id):
 
 
 @login_required
-def product_delete_view(request, id):
-    product = get_object_or_404(Product, id=id)
+# @user_passes_test(permission_of_user_for_posts)
+def product_delete_view(request, slug):
+    product = get_object_or_404(Product, slug=slug)
     if request.method == "POST":
         product.delete()
         return redirect('products:product-list')
