@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  <title>article list</title>
+{% endblock title %}
+  
+{% block content %}
+  
+  <div class="container">
+
+    {% if request.user.is_authenticated %}
+      <p>
+        <a 
+          class="btn btn-outline-primary"
+          href="{% url 'articles:article-create' %}"
+        >
+          Create
+        </a>
+      </p>
+    {% endif %}
+
+    {% for key,value in meta.items %}
+      
+      {% if key == 'REMOTE_ADDR' %}
+        <p>{{ value }}</p>
+        
+      {% endif %}
+      
+    {% endfor %}
+
+    
+    {% for key,value in all.items %}
+      
+      {% if key == 'user' %}
+        <p>{{ key }}: {{ value }}</p>
+        
+      {% endif %}
+        
+    {% endfor %}
+
+    
+    {% for article in request.user.articles.all %}
+      <div class="card">
+        <div class="card-body">
+          <a href="{{ article.get_absolute_url }}">
+            {{ article.id }} - {{ article.title }}
+          </a>
+        </div>
+      </div>
+    {% endfor %}
+      
+      
+    
+  </div>
+
+{% endblock %} 
