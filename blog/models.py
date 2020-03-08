@@ -24,6 +24,7 @@ class Article(models.Model):
     created_on = models.DateTimeField(
         auto_now_add=True,
         )
+    updated = models.DateTimeField(auto_now=True)
     active = models.BooleanField(default=True)
     slug = models.SlugField(max_length=255, null=False, unique=True)
 

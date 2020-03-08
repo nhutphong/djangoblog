@@ -1,7 +1,6 @@
 from django.db import models
 from django.urls import reverse
 from django.contrib.auth.models import User
-from django.contrib.auth.decorators import user_passes_test
 from django.utils.text import slugify
 
 # Create your models here.
@@ -9,7 +8,7 @@ from django.utils.text import slugify
 
 class Product(models.Model):
     title = models.CharField(max_length=120)
-    description = models.TextField(blank=True, null=True)
+    description = models.TextField(blank=True)
     price = models.DecimalField(
         max_digits=5,
         decimal_places=2,
@@ -22,7 +21,7 @@ class Product(models.Model):
         null=True
     )
     slug = models.SlugField(max_length=120, unique=True)
-    summary = models.TextField(blank=False, null=False)
+    summary = models.TextField()
     featured = models.BooleanField(default=False)  # default=True, null=True
     def __str__(self):
         return f"{self.title} {self.id}"
