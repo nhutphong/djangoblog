@@ -2,6 +2,9 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
 from django.utils.text import slugify
+ 
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 
 class Article(models.Model):
@@ -56,3 +59,28 @@ class Article(models.Model):
             'content': self.content,
             'active': self.active
         }
+
+
+@receiver(post_save, sender=Article) #cach 2
+def create_profile(sender, instance, created, **kwargs):
+	print(f"sender: {sender} - instance: {instance} - created: {created} - kwargs:{kwargs}")
+    # sender = class Article, instance = new_article
+
+	# if created: 
+	# 	Profile.objects.create(user=instance)
+	# 	print('Profile created!')
+
+#post_save.connectp(create_rofile, sender=Article) cach 1
+# create_profile() se run khi article = Article.objects.create(...,)
+# or article.save()
+
+
+# @receiver(post_save, sender=Article)
+# def update_profile(sender, instance, created, **kwargs):
+	
+# 	if created == False:
+# 		instance.profile.save()
+# 		print('Profile updated!')
+
+
+#post_save.connect(update_profile, sender=User)
