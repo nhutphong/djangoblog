@@ -36,7 +36,7 @@ def home_test(request):
 
 def filter_test(request):
     template = 'articles/filters/filters.html'
-    full_name = 'vo thanh phong'
+    full_name = 'nguyen chi thong'
     context = {
         'full_name': full_name
     }
