@@ -15,6 +15,7 @@ from . import test_views
 app_name = 'articles'
 urlpatterns = [
     path('test/', test_views.home_test, name='test-home'),
+    path('filter/', test_views.filter_test, name='test-fitlers'),
     path('pagination/', PaginationListView.as_view(), name='pagination-list'),
     path('', ArticleListView.as_view(), name='article-list'),
     path('create/', ArticleCreateView.as_view(), name='article-create'),

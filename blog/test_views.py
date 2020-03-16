@@ -32,3 +32,12 @@ def home_test(request):
     context = {'all': get_all_attr_request(request)}
 
     return render(request, template, context)
+
+
+def filter_test(request):
+    template = 'articles/filters/filters.html'
+    full_name = 'vo thanh phong'
+    context = {
+        'full_name': full_name
+    }
+    return render(request, template, context)

@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load filters_tags %}
+{% load bootstrap4 %}
+
+
+{% block title %}
+  <title>filters</title>
+{% endblock title %}
+  
+
+{% block content %}
+  <div class="container">
+    <div class="card">
+      <div class="card-body">
+        <p>
+          @register.filter: {{ full_name|split:"n" }}
+        </p>
+        <p>
+          @register.simple_tag: {% my_simple_tag 2 3 4 5 6 7 name='phong' old=27 %}
+        </p>
+        
+        {% if request.user.is_authenticated %}  
+          <p>@register.inclusion_tag('articles/filters/inclusion_tag.html')</p>
+          
+          {% my_inclusion_tag request %}
+        {% endif %}
+          
+
+      </div>
+    </div>
+  </div>
+{% endblock content %}
+  
