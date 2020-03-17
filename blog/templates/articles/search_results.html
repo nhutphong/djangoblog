@@ -6,8 +6,6 @@
 {% endblock title %}
 
 {% block content %}
-
-<div class="container">
   
   {% for article in page_obj %}
   <div class="card">
@@ -23,7 +21,5 @@
 
     {% bootstrap_paginate page_obj range=3 %}
   </div>
-
-</div>
 
 {% endblock %}

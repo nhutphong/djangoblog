@@ -35,7 +35,7 @@ def home_test(request):
 
 
 def filter_test(request):
-    template = 'articles/filters/filters.html'
+    template = 'articles/include/filters.html'
     full_name = 'nguyen chi thong'
     context = {
         'full_name': full_name

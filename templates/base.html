@@ -1,3 +1,8 @@
+{% load bootstrap4 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='full' %}
 <!doctype html>
 <html>
 <head>
@@ -7,13 +12,25 @@
     {% endblock title %}
       
 </head>
-<body>
-    {% include 'include/navbar.html' %}
+  <body>
+    <div class="container">
+      {% include 'include/navbar.html' %}
+      {% include 'include/messages.html' %}
+      
+      {% block content %}
+      
+      {% endblock %} 
+      
+      {% include 'include/footer.html' %}
+    </div>
 
-    {% block content %}
-        replace me
-    {% endblock %} 
-
-    {% include 'include/footer.html' %}
-    </body>
+    <!-- remove messages framework -->
+    <script>
+      setTimeout(function(){
+        if ($('#msg').length > 0) {
+          $('#msg').remove();
+        }
+      }, 2000)
+    </script> 
+  </body>
 </html>

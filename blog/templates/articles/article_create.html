@@ -7,13 +7,11 @@
 {% block content %}
 {% load bootstrap4 %}
 
-<div class="container">
   <form action='.' method='POST' enctype="multipart/form-data">
       {% csrf_token %}
       {% comment %} {{ form.as_p }} {% endcomment %}
       {% bootstrap_form form %}
       {% bootstrap_button "Save" button_type="submit" button_class="btn-primary" value="save" %}
   </form>
-</div>
 
 {% endblock %}

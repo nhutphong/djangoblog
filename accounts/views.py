@@ -11,16 +11,19 @@ from .forms import RegisterForm
 # Create your views here.
 def login_user(request):
     if request.method == "POST":
+        print('POST')
         username = request.POST.get('username')
         password = request.POST.get('password')
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
+            messages.success(request, 'you are logged successed')
             # redirect_url = request.GET.get('next', 'home')
-            return redirect('/')
+            return redirect('articles:pagination-list')
         else:
             messages.error(request, 'Bad username or password')
-
+    
+    print('GET')
     return render(request, 'accounts/login.html', {})
 
 def logout_user(request):
