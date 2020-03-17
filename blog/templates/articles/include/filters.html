@@ -20,7 +20,7 @@
         </p>
         
         {% if request.user.is_authenticated %}  
-          <p>@register.inclusion_tag('articles/filters/inclusion_tag.html')</p>
+          <p>@register.inclusion_tag('articles/include/inclusion_tag.html')</p>
           
           {% my_inclusion_tag request %}
         {% endif %}
