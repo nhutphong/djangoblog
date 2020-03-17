@@ -19,17 +19,12 @@ from django.contrib.auth import views as auth_views
 from django.conf import settings
 from django.conf.urls.static import static
 
-from pages.views import home_view, about_view, contact_view
-
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', include('pages.urls')),
     path('products/', include('products.urls')),
     path('blog/', include('blog.urls')),
     path('accounts/', include('accounts.urls')),
-    path('', home_view, name='home'),
-    path('about/', about_view, name='about'),
-    path('contact/', contact_view),
-
     path(
         'password_change/',
         auth_views.PasswordChangeView.as_view(
