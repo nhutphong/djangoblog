@@ -113,8 +113,7 @@ class ArticleUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         obj = self.get_object()
         print(f"self.get_object(): {obj}")
         return obj.author == self.request.user
-
-
+                                                                                                                                             
 # yeu cau dang nhap moi run dc ArticleDeleteView
 @method_decorator(login_required, name='dispatch')
 class ArticleDeleteView(UserPassesTestMixin, DeleteView):
