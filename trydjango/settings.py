@@ -14,6 +14,7 @@ import os
 
 from django.contrib.messages import constants as messages
 
+# global variable messages
 MESSAGE_TAGS = {
     messages.DEBUG: 'alert-info',
     messages.INFO: 'alert-info',
