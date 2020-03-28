@@ -110,9 +110,9 @@ class ArticleUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     #UserPassesTestMixin
     def test_func(self):
         print("test_func(self)")
-        obj = self.get_object()
-        print(f"self.get_object(): {obj}")
-        return obj.author == self.request.user
+        article = self.get_object()
+        print(f"self.get_object(): {article}")
+        return article.author == self.request.user
                                                                                                                                              
 # yeu cau dang nhap moi run dc ArticleDeleteView
 @method_decorator(login_required, name='dispatch')
@@ -131,8 +131,8 @@ class ArticleDeleteView(UserPassesTestMixin, DeleteView):
     
     #UserPassesTestMixin
     def test_func(self):
-        obj = self.get_object()
-        return obj.author == self.request.user
+        article = self.get_object()
+        return article.author == self.request.user
 
 
 class SearchResultsView(PaginationListView, ListView):
