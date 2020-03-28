@@ -13,22 +13,25 @@ from .models import Product
 
 
 def product_list_view(request):
+    template = "products/product_list.html"
     queryset = Product.objects.all()[::-1]  # list of objects
     context = {
         "object_list": queryset
     }
-    return render(request, "products/product_list.html", context)
+    return render(request, template, context)
 
 
 def product_detail_view(request, slug):
+    template = "products/product_detail.html"
     product = get_object_or_404(Product, slug=slug)
     context = {
         "object": product
     }
-    return render(request, "products/product_detail.html", context)
+    return render(request, template, context)
 
 
 def product_create_view(request):
+    template = "products/product_create.html"
     form = ProductForm(request.POST or None)
     if form.is_valid():
         form.save()
@@ -36,12 +39,13 @@ def product_create_view(request):
     context = {
         'form': form
     }
-    return render(request, "products/product_create.html", context)
+    return render(request, template, context)
 
 
 @login_required
 # @user_passes_test(permission_of_user_for_posts)
 def product_update_view(request, slug):
+    template = "products/product_create.html"
     product = get_object_or_404(Product, slug=slug)
     form = ProductForm(request.POST or None, instance=product)
     if form.is_valid():
@@ -50,12 +54,13 @@ def product_update_view(request, slug):
     context = {
         'form': form
     }
-    return render(request, "products/product_create.html", context)
+    return render(request, template, context)
 
 
 @login_required
 # @user_passes_test(permission_of_user_for_posts)
 def product_delete_view(request, slug):
+    template = "products/product_delete.html"
     product = get_object_or_404(Product, slug=slug)
     if request.method == "POST":
         product.delete()
@@ -63,4 +68,4 @@ def product_delete_view(request, slug):
     context = {
         "object": product
     }
-    return render(request, "products/product_delete.html", context)
+    return render(request, template, context)
