@@ -19,12 +19,14 @@ from django.views.generic import (
 
 from .forms import ArticleModelForm
 from .models import Article
+from .utils import design
 
 
 class PaginationListView(ListView):
     template_name = 'articles/pagination_list.html'
     paginate_by = 5
 
+    @design("PaginationListView.get_queryset")
     def get_queryset(self):
         print("Tao la PaginationListView.get_queryset(self)")
         return Article.objects.all()[::-1]
@@ -38,11 +40,15 @@ class ArticleListView(ListView):
     context_object_name = 'article_list'
     # queryset = Article.objects.all()  # <blog>/<modelname>_list.html
 
+    @design('ArticleListView.get_queryset')
     def get_queryset(self):
+        print("Tao la get_queryset(self)")
         return Article.objects.all()[::-1]
 
     # them logic dung ngoai template {{ today }}, {{ number }}
+    @design('ArticleListView.get_context_data')
     def get_context_data(self, **kwargs):
+        print("Tao la get_context_data(self, **kwargs)")
         context = super().get_context_data(**kwargs)
 
         context['today'] = timezone.now()
@@ -56,9 +62,10 @@ class ArticleDetailView(DetailView):
     #queryset = Article.objects.all()
     query_pk_and_slug = True
 
+    @design("ArticleDetailView.get_object")
     def get_object(self):
         slug = self.kwargs.get("slug")
-        print("Tao la ArticleDetailView")
+        print("Tao la get_object(self)")
         print(f"self.kwargs: {self.kwargs}")
         return get_object_or_404(Article, slug=slug)
 
@@ -98,18 +105,22 @@ class ArticleUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     form_class = ArticleModelForm
     query_pk_and_slug = True
 
+    @design("ArticleUpdateView.get_object")
     def get_object(self):
         slug = self.kwargs.get("slug")
         # return get_object_or_404(Article, id=id_)
         return get_object_or_404(Article, slug=slug)
 
+    @design("ArticleUpdateView.form_valid")
     def form_valid(self, form):
+        print("Tao la form_valid(self, form)")
         print(form.cleaned_data)
         return super().form_valid(form)
     
     #UserPassesTestMixin
+    @design("ArticleUpdateView.test_func")
     def test_func(self):
-        print("test_func(self)")
+        print("Tao la test_func(self)")
         article = self.get_object()
         print(f"self.get_object(): {article}")
         return article.author == self.request.user
