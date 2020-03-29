@@ -49,11 +49,14 @@ class Article(models.Model):
         return f"{self.title} - {self.id}"
 
     # dung ngoai template, redirect cho CreateView
+    @design("Article.get_absolute_url")
     def get_absolute_url(self):
         print(f"Tao la Article.get_absolute_url(self)")
         return reverse("articles:article-detail", kwargs={"slug": self.slug})
 
+    @design("Article.save")
     def save(self, *args, **kwargs):  # new
+        print(f"Tao la Article.save(self, *args, **kwargs)")
         if not self.slug:
             self.slug = slugify(self.title)
         return super().save(*args, **kwargs)

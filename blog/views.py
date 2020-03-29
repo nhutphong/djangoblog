@@ -107,6 +107,7 @@ class ArticleUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
     @design("ArticleUpdateView.get_object")
     def get_object(self):
+        print(f"Tao la get_object(self)")
         slug = self.kwargs.get("slug")
         # return get_object_or_404(Article, id=id_)
         return get_object_or_404(Article, slug=slug)
@@ -122,7 +123,6 @@ class ArticleUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     def test_func(self):
         print("Tao la test_func(self)")
         article = self.get_object()
-        print(f"self.get_object(): {article}")
         return article.author == self.request.user
                                                                                                                                              
 # yeu cau dang nhap moi run dc ArticleDeleteView
@@ -132,16 +132,22 @@ class ArticleDeleteView(UserPassesTestMixin, DeleteView):
     # success_url = reverse_lazy('articles:article-list')
     query_pk_and_slug = True
 
+    @design("ArticleDeleteView.get_object")
     def get_object(self):
+        print("Tao la get_object(self)")
         slug = self.kwargs.get("slug")
         # return get_object_or_404(Article, id=id_)
         return get_object_or_404(Article, slug=slug)
 
+    @design("ArticleDeleteView.get_success_url")
     def get_success_url(self):
+        print("Tao la get_success_url(self)")
         return reverse('articles:article-list')
     
     #UserPassesTestMixin
+    @design("ArticleDeleteView.test_func")
     def test_func(self):
+        print("Tao la test_func(self)")
         article = self.get_object()
         return article.author == self.request.user
 
@@ -152,6 +158,7 @@ class SearchResultsView(PaginationListView, ListView):
     template_name = 'articles/search_results.html'
     context_object_name = 'article_list'
 
+    @design("SearchResultsView.get_queryset")
     def get_queryset(self):
         print("Tao la SearchResultsView START")
         query = self.request.GET.get('q')
@@ -159,5 +166,4 @@ class SearchResultsView(PaginationListView, ListView):
             Q(title__icontains=query) | 
             Q(content__icontains=query)
         )
-        print(f"Tao la SearchResultsView END {self.request.GET.get}")
         return object_list
