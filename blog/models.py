@@ -18,7 +18,7 @@ from django.core.signals import(
 )
 from django.dispatch import receiver
 
-from .utils import design #person
+from utils.decorators import design
 
 
 class Article(models.Model):
@@ -136,4 +136,3 @@ def user_login_failed_receiver(sender, credentials, request, **kwargs):
 @design(name='request_finished')
 def request_finished_receiver(sender, **kwargs):
     print(f"1-sender: {sender} - 2-kwargs: {kwargs}")
-

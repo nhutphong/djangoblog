@@ -4,8 +4,7 @@ from django.contrib.auth.decorators import login_required
 from .forms import ProductForm
 from .models import Product
 
-from blog.utils import design
-
+from utils.decorators import design
 
 # def permission_of_user_for_posts(request,**kwargs):
 #     product = get_object_or_404(Product, slug=request.GET.get('slug'))

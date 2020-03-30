@@ -19,8 +19,7 @@ from django.views.generic import (
 
 from .forms import ArticleModelForm
 from .models import Article
-from .utils import design
-
+from utils.decorators import design
 
 class PaginationListView(ListView):
     template_name = 'articles/pagination_list.html'

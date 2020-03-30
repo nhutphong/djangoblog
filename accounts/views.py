@@ -40,7 +40,7 @@ def register(request):
             password1 = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=password1)
             login(request, user)
-            return redirect("/")
+            return redirect("articles:pagination-list")
     else:
         form = RegisterForm()
 
