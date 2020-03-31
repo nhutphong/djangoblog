@@ -32,7 +32,7 @@ class PaginationListView(ListView):
 
 
 class ArticleListView(ListView):
-    # cac attrs class co nhieu methods tuong ung de thuc hien nhieu login hon
+    # cac attrs class co nhieu methods tuong ung de thuc hien nhieu logic hon
     # queryset <=> get_context_data(self)
 
     template_name = 'articles/article_list.html'
@@ -58,7 +58,6 @@ class ArticleListView(ListView):
 class ArticleDetailView(DetailView):
     template_name = 'articles/article_detail.html'
     context_object_name = 'article'
-    #queryset = Article.objects.all()
     query_pk_and_slug = True
 
     @design("ArticleDetailView.get_object")
