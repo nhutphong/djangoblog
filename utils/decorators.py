@@ -7,5 +7,7 @@ def design(name=None, letter='#'):
             fun = func(*args, **kwargs)
             print(f"{name+ ' END ':{letter}^85}", end='\n'*2)
             return fun
+
         return wrapped
+        
     return function
