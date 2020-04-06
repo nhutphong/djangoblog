@@ -1,16 +1,13 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.contrib.auth.decorators import login_required
-# from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.decorators import login_required, user_passes_test
 from .forms import ProductForm
 from .models import Product
 
 from utils.decorators import design
 
-# def permission_of_user_for_posts(request,**kwargs):
-#     product = get_object_or_404(Product, slug=request.GET.get('slug'))
-#     if request.user.username == product.author:
-#         return True
-#     return False
+def is_root(user, **kwargs):
+    print(kwargs)
+    return user.is_superuser
 
 @design("product_list_view")
 def product_list_view(request):
@@ -22,6 +19,7 @@ def product_list_view(request):
     }
     return render(request, template, context)
 
+
 @design("product_detail_view")
 def product_detail_view(request, slug):
     print("Tao la product_detail_view(request, slug)")
@@ -32,14 +30,19 @@ def product_detail_view(request, slug):
     }
     return render(request, template, context)
 
+
+@login_required
 @design("product_create_view")
 def product_create_view(request):
     print('Tao la product_create_view(request)')
     template = "products/product_create.html"
     form = ProductForm(request.POST or None)
     if form.is_valid():
-        form.save()
+        product = form.save(commit=False)
+        product.author = request.user
+        product.save()
         return redirect('products:product-list')
+
     context = {
         'form': form
     }
@@ -47,7 +50,6 @@ def product_create_view(request):
 
 
 @login_required
-# @user_passes_test(permission_of_user_for_posts)
 @design("product_update_view")
 def product_update_view(request, slug):
     print("Tao la product_update_view(request, slug)")
@@ -57,14 +59,14 @@ def product_update_view(request, slug):
     if form.is_valid():
         form.save()
         return redirect('products:product-list')
+
     context = {
         'form': form
     }
     return render(request, template, context)
 
 
-@login_required
-# @user_passes_test(permission_of_user_for_posts)
+@user_passes_test(is_root)
 @design("product_delete_view")
 def product_delete_view(request, slug):
     print('Tao la product_delete_view(request, slug)')
@@ -73,6 +75,7 @@ def product_delete_view(request, slug):
     if request.method == "POST":
         product.delete()
         return redirect('products:product-list')
+
     context = {
         "object": product
     }

@@ -83,7 +83,7 @@ class Article(models.Model):
 def pre_save_article(sender, instance, **kwargs):
 	print(f"Tao la pre_save run khi article.save()")
     
-#post_save.connectp(create_rofile, sender=Article) cach 1
+#post_save.connect(create_profile, sender=Article) cach 1
 # pre_save_article() se run khi article = Article.objects.create(...,)
 # or article.save()
 
