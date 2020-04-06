@@ -5,7 +5,7 @@ from .models import Product
 
 from utils.decorators import design
 
-def is_root(user, **kwargs):
+def is_super(user, **kwargs):
     print(kwargs)
     return user.is_superuser
 
@@ -66,7 +66,7 @@ def product_update_view(request, slug):
     return render(request, template, context)
 
 
-@user_passes_test(is_root)
+@user_passes_test(is_super)
 @design("product_delete_view")
 def product_delete_view(request, slug):
     print('Tao la product_delete_view(request, slug)')
