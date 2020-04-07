@@ -130,6 +130,9 @@ class ArticleDeleteView(UserPassesTestMixin, DeleteView):
     # success_url = reverse_lazy('articles:article-list')
     query_pk_and_slug = True
 
+    # raise_exception = True
+    # permission_denied_message = "ban khong phai la owner"
+
     @design("ArticleDeleteView.get_object")
     def get_object(self):
         print("Tao la get_object(self)")
