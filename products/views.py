@@ -1,5 +1,11 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib.auth.decorators import(
+    login_required,
+    user_passes_test,
+    permission_required
+)
+from django.core.exceptions import PermissionDenied
+from django.http import Http404
 from .forms import ProductForm
 from .models import Product
 
@@ -23,6 +29,7 @@ def product_list_view(request):
 @design("product_detail_view")
 def product_detail_view(request, slug):
     print("Tao la product_detail_view(request, slug)")
+    
     template = "products/product_detail.html"
     product = get_object_or_404(Product, slug=slug)
     context = {
@@ -66,10 +73,16 @@ def product_update_view(request, slug):
     return render(request, template, context)
 
 
-@user_passes_test(is_super)
+# @user_passes_test(is_super, redirect_field_name='next')
+# @permission_required("product.delete_view", raise_exception=True)
 @design("product_delete_view")
 def product_delete_view(request, slug):
     print('Tao la product_delete_view(request, slug)')
+    # print(request.path)
+    if not request.user.is_superuser:
+        raise PermissionDenied
+        # return redirect(f"/accounts/login/?next={request.path}")
+
     template = "products/product_delete.html"
     product = get_object_or_404(Product, slug=slug)
     if request.method == "POST":
