@@ -51,7 +51,7 @@ class ArticleListView(ListView):
         context = super().get_context_data(**kwargs)
 
         context['today'] = timezone.now()
-        context['number'] = random.randrange(1, 100)
+        context['auto_number'] = random.randrange(1, 100)
         return context
 
 

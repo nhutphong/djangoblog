@@ -22,7 +22,7 @@
           <a href='{{ article.get_absolute_url }}'>
            {{ article.title }}
           </a> 
-          {{ number }} - {{ today }}
+          auto_number: {{ auto_number }} - created_on: {{ article.created_on|date:"l H:i:s - d/m/Y"}}
         </p>
     {% endfor %}
 
