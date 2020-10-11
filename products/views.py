@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import(
 )
 from django.core.exceptions import PermissionDenied
 from django.http import Http404
-from .forms import ProductForm
+from .forms import ProductModelForm
 from .models import Product
 
 from utils.decorators import design
@@ -23,6 +23,27 @@ def product_list_view(request):
     context = {
         "object_list": queryset
     }
+
+    return render(request, template, context)
+
+
+@login_required
+@design("product_create_view")
+def product_create_view(request):
+    print('Tao la product_create_view(request)')
+    template = "products/product_create.html"
+    form = ProductModelForm(request.POST or None)
+
+    if form.is_valid():
+        product = form.save(commit=False)
+        product.author = request.user
+        product.save()
+
+        return redirect('products:product-list')
+
+    context = {
+        'form': form
+    }
     return render(request, template, context)
 
 
@@ -35,24 +56,7 @@ def product_detail_view(request, slug):
     context = {
         "object": product
     }
-    return render(request, template, context)
 
-
-@login_required
-@design("product_create_view")
-def product_create_view(request):
-    print('Tao la product_create_view(request)')
-    template = "products/product_create.html"
-    form = ProductForm(request.POST or None)
-    if form.is_valid():
-        product = form.save(commit=False)
-        product.author = request.user
-        product.save()
-        return redirect('products:product-list')
-
-    context = {
-        'form': form
-    }
     return render(request, template, context)
 
 
@@ -62,7 +66,8 @@ def product_update_view(request, slug):
     print("Tao la product_update_view(request, slug)")
     template = "products/product_create.html"
     product = get_object_or_404(Product, slug=slug)
-    form = ProductForm(request.POST or None, instance=product)
+    form = ProductModelForm(request.POST or None, instance=product)
+
     if form.is_valid():
         form.save()
         return redirect('products:product-list')
@@ -70,6 +75,7 @@ def product_update_view(request, slug):
     context = {
         'form': form
     }
+
     return render(request, template, context)
 
 
@@ -92,4 +98,5 @@ def product_delete_view(request, slug):
     context = {
         "object": product
     }
+    
     return render(request, template, context)

@@ -4,7 +4,7 @@ from django import forms
 from .models import Product
 
 
-class ProductForm(forms.ModelForm):
+class ProductModelForm(forms.ModelForm):
     title = forms.CharField(
         label='',
         widget=forms.TextInput(
@@ -21,6 +21,8 @@ class ProductForm(forms.ModelForm):
             }
         )
     )
+
+    # html> <name=price value=199.99>
     price = forms.DecimalField(initial=199.99)
 
     class Meta:
@@ -32,7 +34,7 @@ class ProductForm(forms.ModelForm):
         ]
 
 
-class RawProductForm(forms.Form):
+class ProductForm(forms.Form):
     title = forms.CharField(label='', widget=forms.TextInput(
         attrs={"placeholder": "Your title"}))
     description = forms.CharField(

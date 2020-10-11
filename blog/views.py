@@ -55,19 +55,6 @@ class ArticleListView(ListView):
         return context
 
 
-class ArticleDetailView(DetailView):
-    template_name = 'articles/article_detail.html'
-    context_object_name = 'article'
-    query_pk_and_slug = True
-
-    @design("ArticleDetailView.get_object")
-    def get_object(self):
-        slug = self.kwargs.get("slug")
-        print("Tao la get_object(self)")
-        print(f"self.kwargs: {self.kwargs}")
-        return get_object_or_404(Article, slug=slug)
-
-
 # @method_decorator(login_required, name='dispatch')
 class ArticleCreateView(LoginRequiredMixin, CreateView):
     # yeu cau dang nhap moi run dc ArticleCreateView
@@ -90,6 +77,21 @@ class ArticleCreateView(LoginRequiredMixin, CreateView):
 
     # def get_success_url(self):
     #    return '/'
+
+    
+class ArticleDetailView(DetailView):
+    template_name = 'articles/article_detail.html'
+    context_object_name = 'article'
+    query_pk_and_slug = True
+
+    @design("ArticleDetailView.get_object")
+    def get_object(self):
+        slug = self.kwargs.get("slug")
+        print("Tao la get_object(self)")
+        print(f"self.kwargs: {self.kwargs}")
+        return get_object_or_404(Article, slug=slug)
+
+
 
 
 # dung cho class base view
