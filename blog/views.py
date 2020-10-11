@@ -48,6 +48,8 @@ class ArticleListView(ListView):
     @design('ArticleListView.get_context_data')
     def get_context_data(self, **kwargs):
         print("Tao la get_context_data(self, **kwargs)")
+
+        # important
         context = super().get_context_data(**kwargs)
 
         context['today'] = timezone.now()
@@ -67,6 +69,7 @@ class ArticleCreateView(LoginRequiredMixin, CreateView):
     queryset = Article.objects.all()  # <blog>/<modelname>_list.html
     #success_url = '/'
 
+
     def form_valid(self, form):
         print(f"ArticleCreateView.form_valid(self): form.cleaned_data: {form.cleaned_data}")
 
@@ -81,7 +84,7 @@ class ArticleCreateView(LoginRequiredMixin, CreateView):
     
 class ArticleDetailView(DetailView):
     template_name = 'articles/article_detail.html'
-    context_object_name = 'article'
+    context_object_name = 'article' # dung ngoai template {{ article }}
     query_pk_and_slug = True
 
     @design("ArticleDetailView.get_object")
@@ -90,8 +93,6 @@ class ArticleDetailView(DetailView):
         print("Tao la get_object(self)")
         print(f"self.kwargs: {self.kwargs}")
         return get_object_or_404(Article, slug=slug)
-
-
 
 
 # dung cho class base view
