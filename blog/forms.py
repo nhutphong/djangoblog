@@ -60,6 +60,35 @@ def validate_even(value):
 # validators = [ func, ...]
 # dung duoc cho form field va model field
 
+from django.core.validators import validate_email
+
+class MultiEmailField(forms.Field):
+    def to_python(self, emalis: str) -> list :
+        """Normalize data to a list of strings."""
+        # Return an empty list if no input was given.
+        if not value:
+            return []
+        return value.split(',')
+
+    def validate(self, emails: list):
+        """Check if value consists only of valid emails."""
+        # Use the parent's handling of required fields, etc.
+        super().validate(emails)
+        for email in emails:
+            validate_email(email)
+
+
+
+"""
+    form = ContactForm(request.POST)
+
+    form.is_valid() se call MultiEmailField.clean() 
+    MultiEmailField.clean() se call 2 method
+        to_python(self, value)
+        validate(self, value)
+
+    thuc ra la validate(to_python(value))
+"""
 class ContactForm(forms.Form):
     subject = forms.CharField(max_length=100)
     message = forms.CharField()
@@ -71,7 +100,7 @@ class ContactForm(forms.Form):
     cc_myself = forms.BooleanField(required=False)
 
     # clean_<field_name>
-    # check one field_message
+    # check one field_message: co san attr self.cleaned_data
     # khong nen co check nhieu field: def clean(self)
     def clean_message(self):
         message = self.cleaned_data['message']
@@ -83,8 +112,8 @@ class ContactForm(forms.Form):
 
     # check more fields
     def clean(self):
-        #super().clean()
-        # self.cleaned_data
+        # run  super().clean()
+        # se co attr self.cleaned_data
 
         cleaned_data = super().clean()
 

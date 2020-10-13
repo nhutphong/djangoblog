@@ -3,7 +3,7 @@ from django.urls import reverse
 from django.contrib.auth.models import User
 from django.utils.text import slugify
 
-from utils.decorators import design
+from utils.decorators import record_terminal
 
 
 class Product(models.Model):
@@ -31,13 +31,13 @@ class Product(models.Model):
         return f"{self.title} {self.id}"
 
     # dung ngoai templates {{ obj.get_absolute_url }}
-    @design("Product.get_absolute_url")
+    @record_terminal("Product.get_absolute_url")
     def get_absolute_url(self):
         print("Tao la get_absolute_url(self)")
         # f"/products/{self.id}/"
         return reverse("products:product-detail", kwargs={"slug": self.slug})
 
-    @design("Product.save")
+    @record_terminal("Product.save")
     def save(self, *args, **kwargs):  # new
         print("Tao la save(self, *args, **kwargs)")
         if not self.slug:

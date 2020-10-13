@@ -1,6 +1,6 @@
 from functools import wraps
 
-def design(name=None, letter='#'):
+def record_terminal(name=None, letter='#'):
 
     def function(func):
 

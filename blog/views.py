@@ -19,13 +19,13 @@ from django.views.generic import (
 
 from .forms import ArticleModelForm
 from .models import Article
-from utils.decorators import design
+from utils.decorators import record_terminal
 
 class PaginationListView(ListView):
     template_name = 'articles/pagination_list.html'
     paginate_by = 5
 
-    @design("PaginationListView.get_queryset")
+    @record_terminal("PaginationListView.get_queryset")
     def get_queryset(self):
         print("Tao la PaginationListView.get_queryset(self)")
         return Article.objects.all()[::-1]
@@ -36,25 +36,35 @@ class ArticleListView(ListView):
     # queryset <=> get_context_data(self)
 
     template_name = 'articles/article_list.html'
-    context_object_name = 'article_list'
+    # context_object_name = 'article_list'
     # queryset = Article.objects.all()  # <blog>/<modelname>_list.html
 
-    @design('ArticleListView.get_queryset')
-    def get_queryset(self):
+    @record_terminal('ArticleListView.get_queryset')
+    def get_queryset(self): #run 1 -> end 1
         print("Tao la get_queryset(self)")
         return Article.objects.all()[::-1]
 
     # them logic dung ngoai template {{ today }}, {{ number }}
-    @design('ArticleListView.get_context_data')
-    def get_context_data(self, **kwargs):
+    @record_terminal('ArticleListView.get_context_data')
+    def get_context_data(self, **kwargs): #run 2
         print("Tao la get_context_data(self, **kwargs)")
+        print(f"{kwargs = }")
 
         # important
         context = super().get_context_data(**kwargs)
+        print(f"{context = }")
 
         context['today'] = timezone.now()
         context['auto_number'] = random.randrange(1, 100)
         return context
+
+
+    @record_terminal('ArticleListView.get_context_object_name')
+    def get_context_object_name(self, object_list): #run 2.1
+        print(f"{object_list = }")
+        return "article_list" # end 2.1 -> end 2
+        # return f"{type(object_list[0]).__name__.lower()}_list"
+        
 
 
 # @method_decorator(login_required, name='dispatch')
@@ -87,7 +97,7 @@ class ArticleDetailView(DetailView):
     context_object_name = 'article' # dung ngoai template {{ article }}
     query_pk_and_slug = True
 
-    @design("ArticleDetailView.get_object")
+    @record_terminal("ArticleDetailView.get_object")
     def get_object(self):
         slug = self.kwargs.get("slug")
         print("Tao la get_object(self)")
@@ -106,21 +116,21 @@ class ArticleUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     form_class = ArticleModelForm
     query_pk_and_slug = True
 
-    @design("ArticleUpdateView.get_object")
+    @record_terminal("ArticleUpdateView.get_object")
     def get_object(self):
         print(f"Tao la get_object(self)")
         slug = self.kwargs.get("slug")
         # return get_object_or_404(Article, id=id_)
         return get_object_or_404(Article, slug=slug)
 
-    @design("ArticleUpdateView.form_valid")
+    @record_terminal("ArticleUpdateView.form_valid")
     def form_valid(self, form):
         print("Tao la form_valid(self, form)")
         print(form.cleaned_data)
         return super().form_valid(form)
     
     #UserPassesTestMixin
-    @design("ArticleUpdateView.test_func")
+    @record_terminal("ArticleUpdateView.test_func")
     def test_func(self):
         print("Tao la test_func(self)")
         article = self.get_object()
@@ -136,20 +146,20 @@ class ArticleDeleteView(UserPassesTestMixin, DeleteView):
     # raise_exception = True
     # permission_denied_message = "ban khong phai la owner"
 
-    @design("ArticleDeleteView.get_object")
+    @record_terminal("ArticleDeleteView.get_object")
     def get_object(self):
         print("Tao la get_object(self)")
         slug = self.kwargs.get("slug")
         # return get_object_or_404(Article, id=id_)
         return get_object_or_404(Article, slug=slug)
 
-    @design("ArticleDeleteView.get_success_url")
+    @record_terminal("ArticleDeleteView.get_success_url")
     def get_success_url(self):
         print("Tao la get_success_url(self)")
         return reverse('articles:article-list')
     
     #UserPassesTestMixin
-    @design("ArticleDeleteView.test_func")
+    @record_terminal("ArticleDeleteView.test_func")
     def test_func(self):
         print("Tao la test_func(self)")
         article = self.get_object()
@@ -162,7 +172,7 @@ class SearchResultsView(PaginationListView, ListView):
     template_name = 'articles/search_results.html'
     context_object_name = 'article_list'
 
-    @design("SearchResultsView.get_queryset")
+    @record_terminal("SearchResultsView.get_queryset")
     def get_queryset(self):
         print("Tao la SearchResultsView START")
         query = self.request.GET.get('q')

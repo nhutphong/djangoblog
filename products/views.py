@@ -9,13 +9,13 @@ from django.http import Http404
 from .forms import ProductModelForm
 from .models import Product
 
-from utils.decorators import design
+from utils.decorators import record_terminal
 
 def is_super(user, **kwargs):
     print(kwargs)
     return user.is_superuser
 
-@design("product_list_view")
+@record_terminal("product_list_view")
 def product_list_view(request):
     print("Tao la product_list_view(request)")
     template = "products/product_list.html"
@@ -28,7 +28,7 @@ def product_list_view(request):
 
 
 @login_required
-@design("product_create_view")
+@record_terminal("product_create_view")
 def product_create_view(request):
     print('Tao la product_create_view(request)')
     template = "products/product_create.html"
@@ -47,7 +47,7 @@ def product_create_view(request):
     return render(request, template, context)
 
 
-@design("product_detail_view")
+@record_terminal("product_detail_view")
 def product_detail_view(request, slug):
     print("Tao la product_detail_view(request, slug)")
     
@@ -61,7 +61,7 @@ def product_detail_view(request, slug):
 
 
 @login_required
-@design("product_update_view")
+@record_terminal("product_update_view")
 def product_update_view(request, slug):
     print("Tao la product_update_view(request, slug)")
     template = "products/product_create.html"
@@ -81,7 +81,7 @@ def product_update_view(request, slug):
 
 # @user_passes_test(is_super, redirect_field_name='next')
 # @permission_required("product.delete_view", raise_exception=True)
-@design("product_delete_view")
+@record_terminal("product_delete_view")
 def product_delete_view(request, slug):
     print('Tao la product_delete_view(request, slug)')
     # print(request.path)

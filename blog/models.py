@@ -18,7 +18,7 @@ from django.core.signals import(
 )
 from django.dispatch import receiver
 
-from utils.decorators import design
+from utils.decorators import record_terminal
 
 
 class Article(models.Model):
@@ -46,15 +46,15 @@ class Article(models.Model):
     slug = models.SlugField(max_length=255, null=False, unique=True)
 
     def __str__(self):
-        return f"{self.title} - {self.id}"
+        return f"{self.title[:10]} - {self.id}"
 
     # dung ngoai template, redirect cho CreateView
-    @design("Article.get_absolute_url")
+    @record_terminal("Article.get_absolute_url")
     def get_absolute_url(self):
         print(f"Tao la Article.get_absolute_url(self)")
         return reverse("articles:article-detail", kwargs={"slug": self.slug})
 
-    @design("Article.save")
+    @record_terminal("Article.save")
     def save(self, *args, **kwargs):  # new
         print(f"Tao la Article.save(self, *args, **kwargs)")
         if not self.slug:
@@ -79,7 +79,7 @@ class Article(models.Model):
 
 
 @receiver(pre_save, sender=Article) #cach 2
-@design(name='pre_save', letter='+')
+@record_terminal(name='pre_save', letter='+')
 def pre_save_article(sender, instance, **kwargs):
 	print(f"Tao la pre_save run khi article.save()")
     
@@ -89,7 +89,7 @@ def pre_save_article(sender, instance, **kwargs):
 
 
 @receiver(post_save, sender=Article)
-@design(name='post_save', letter='+')
+@record_terminal(name='post_save', letter='+')
 def post_save_article(sender, instance, created, **kwargs):
     print(f"1-sender: {sender} - 2-instance: {instance} - 3-created: {created}")
     print(f"post_save() run khi article.save() or Article.objects.create()")
@@ -97,7 +97,7 @@ def post_save_article(sender, instance, created, **kwargs):
 
 
 @receiver(post_delete, sender=Article)
-@design(name='post_delete', letter='-')
+@record_terminal(name='post_delete', letter='-')
 def post_delete_article(sender, instance, using, **kwargs):
     print(f"1-sender: {sender} - 2-instance: {instance} - 3-using: {using}")
     print(
@@ -106,33 +106,33 @@ def post_delete_article(sender, instance, using, **kwargs):
 
 
 @receiver(user_logged_in)
-@design(name='user_logged_in') #person
+@record_terminal(name='user_logged_in') #person
 def user_login_receiver(sender, request, user, **kwargs):
     print(f"1-sender: {sender} - 2-request: {request} - 3-user: {user}")
     print(f"4-kwargs: {kwargs}")
 
 
 @receiver(user_logged_out)
-@design(name='user_logged_out') #person
+@record_terminal(name='user_logged_out') #person
 def user_logout_receiver(sender, request, user, **kwargs):
     print(f"1-sender: {sender} - 2-request: {request} - 3-user: {user}")
     print(f"4-kwargs: {kwargs}")
 
 
 @receiver(user_login_failed)
-@design(name='user_login_failed') #person
+@record_terminal(name='user_login_failed') #person
 def user_login_failed_receiver(sender, credentials, request, **kwargs):
     print(f"1-sender: {sender} - 2-credentials: {credentials} - 3-request: {request}")
     print(f"4-kwargs: {kwargs}")
 
 
 # @receiver(request_started)
-# @design(name='request_started')
+# @record_terminal(name='request_started')
 # def request_started_receiver(sender, environ, **kwargs):
 #     print(f"sender: {sender} - environ: {environ} - kwargs: {kwargs}")
 
 
 @receiver(request_finished)
-@design(name='request_finished')
+@record_terminal(name='request_finished')
 def request_finished_receiver(sender, **kwargs):
     print(f"1-sender: {sender} - 2-kwargs: {kwargs}")
