@@ -22,27 +22,36 @@ from .models import Article
 from utils.decorators import record_terminal
 
 class PaginationListView(ListView):
+    model = Article
     template_name = 'articles/pagination_list.html'
+    # queryset = Article.objects.all()
     paginate_by = 5
 
     @record_terminal("PaginationListView.get_queryset")
     def get_queryset(self):
         print("Tao la PaginationListView.get_queryset(self)")
-        return Article.objects.all()[::-1]
+
+        queryset = super().get_queryset()
+        return queryset[::-1]
+        # return Article.objects.all()[::-1]
 
 
 class ArticleListView(ListView):
     # cac attrs class co nhieu methods tuong ung de thuc hien nhieu logic hon
     # queryset <=> get_context_data(self)
 
+    model = Article
     template_name = 'articles/article_list.html'
-    # context_object_name = 'article_list'
+    # context_object_name = 'article_list' # or object_list
     # queryset = Article.objects.all()  # <blog>/<modelname>_list.html
 
     @record_terminal('ArticleListView.get_queryset')
     def get_queryset(self): #run 1 -> end 1
         print("Tao la get_queryset(self)")
-        return Article.objects.all()[::-1]
+
+        queryset = super().get_queryset()
+        return queryset[::-1]
+        # return Article.objects.all()[::-1]
 
     # them logic dung ngoai template {{ today }}, {{ number }}
     @record_terminal('ArticleListView.get_context_data')
@@ -76,7 +85,6 @@ class ArticleCreateView(LoginRequiredMixin, CreateView):
 
     template_name = 'articles/article_create.html'
     form_class = ArticleModelForm
-    queryset = Article.objects.all()  # <blog>/<modelname>_list.html
     #success_url = '/'
 
 
@@ -93,6 +101,7 @@ class ArticleCreateView(LoginRequiredMixin, CreateView):
 
     
 class ArticleDetailView(DetailView):
+    model = Article
     template_name = 'articles/article_detail.html'
     context_object_name = 'article' # dung ngoai template {{ article }}
     query_pk_and_slug = True
@@ -102,7 +111,7 @@ class ArticleDetailView(DetailView):
         slug = self.kwargs.get("slug")
         print("Tao la get_object(self)")
         print(f"self.kwargs: {self.kwargs}")
-        return get_object_or_404(Article, slug=slug)
+        return get_object_or_404(self.model, slug=slug)
 
 
 # dung cho class base view
@@ -111,7 +120,7 @@ class ArticleUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
     # login_url = '/accounts/login/'
     # redirect_field_name = 'next'
-
+    model = Article
     template_name = 'articles/article_create.html'
     form_class = ArticleModelForm
     query_pk_and_slug = True
@@ -121,13 +130,15 @@ class ArticleUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         print(f"Tao la get_object(self)")
         slug = self.kwargs.get("slug")
         # return get_object_or_404(Article, id=id_)
-        return get_object_or_404(Article, slug=slug)
+        return get_object_or_404(self.model, slug=slug)
 
     @record_terminal("ArticleUpdateView.form_valid")
     def form_valid(self, form):
         print("Tao la form_valid(self, form)")
         print(form.cleaned_data)
-        return super().form_valid(form)
+        return super().form_valid(form) # class FormMixin
+        # 
+        #return HttpResponseRedirect(self.get_success_url())
     
     #UserPassesTestMixin
     @record_terminal("ArticleUpdateView.test_func")
@@ -139,6 +150,7 @@ class ArticleUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 # yeu cau dang nhap moi run dc ArticleDeleteView
 @method_decorator(login_required, name='dispatch')
 class ArticleDeleteView(UserPassesTestMixin, DeleteView):
+    model = Article
     template_name = 'articles/article_delete.html'
     # success_url = reverse_lazy('articles:article-list')
     query_pk_and_slug = True
@@ -151,7 +163,7 @@ class ArticleDeleteView(UserPassesTestMixin, DeleteView):
         print("Tao la get_object(self)")
         slug = self.kwargs.get("slug")
         # return get_object_or_404(Article, id=id_)
-        return get_object_or_404(Article, slug=slug)
+        return get_object_or_404(self.model, slug=slug)
 
     @record_terminal("ArticleDeleteView.get_success_url")
     def get_success_url(self):
@@ -176,7 +188,7 @@ class SearchResultsView(PaginationListView, ListView):
     def get_queryset(self):
         print("Tao la SearchResultsView START")
         query = self.request.GET.get('q')
-        object_list = Article.objects.filter(
+        object_list = self.model.objects.filter(
             Q(title__icontains=query) | 
             Q(content__icontains=query)
         )

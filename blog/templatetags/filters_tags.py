@@ -6,7 +6,7 @@ register = template.Library()
 #template {{ value|split:"two" }}
 #khong co param two cang tot
 @register.filter
-def split(value, two=None):
+def my_split(value, two=None):
     return value.split(sep=two)
 
 
