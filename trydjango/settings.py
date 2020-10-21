@@ -56,7 +56,7 @@ INSTALLED_APPS = [
     # three
     'bootstrap4',
     'crispy_forms',
-    'bootstrap_pagination',
+    'django_pagination_bootstrap',
 
     # local
     'pages',
@@ -107,7 +107,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'trydjango',
-        'USER': 'nhut',
+        'USER': 'phong',
         'PASSWORD': '12341234',
         'HOST': 'localhost',
         'PORT': '5432',
