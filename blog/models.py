@@ -93,7 +93,7 @@ def pre_save_article(sender, instance, **kwargs):
 def post_save_article(sender, instance, created, **kwargs):
     print(f"1-sender: {sender} - 2-instance: {instance} - 3-created: {created}")
     print(f"post_save() run khi article.save() or Article.objects.create()")
-#post_save.connect(post_save_article, sender=User)
+#post_save.connect(post_save_article, sender=Article)
 
 
 @receiver(post_delete, sender=Article)
