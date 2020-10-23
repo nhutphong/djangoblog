@@ -56,7 +56,9 @@ INSTALLED_APPS = [
     # three
     'bootstrap4',
     'crispy_forms',
-    'django_pagination_bootstrap',
+    'bootstrap_pagination',
+    # 'django_pagination_bootstrap',
+
 
     # local
     'pages',
