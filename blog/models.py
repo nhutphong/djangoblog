@@ -78,12 +78,17 @@ class Article(models.Model):
         }
 
 
+
+# pre: run dau save()
+# post: run cuoi save()
+
+
 @receiver(pre_save, sender=Article) #cach 2
 @record_terminal(name='pre_save', letter='+')
 def pre_save_article(sender, instance, **kwargs):
 	print(f"Tao la pre_save run khi article.save()")
     
-#post_save.connect(create_profile, sender=Article) cach 1
+#pre_save.connect(pre_save_article, sender=Article) cach 1
 # pre_save_article() se run khi article = Article.objects.create(...,)
 # or article.save()
 
