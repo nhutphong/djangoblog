@@ -30,7 +30,7 @@ class Article(models.Model):
     author = models.ForeignKey(
         User, 
         on_delete=models.CASCADE,
-        related_name='articles',
+        related_name='articles', # user.articles
         null=True
     )
     picture = models.FileField(
