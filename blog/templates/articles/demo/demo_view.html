@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  <title>article list</title>
+{% endblock title %}
+  
+{% block content %}
+  {% if request.user.is_authenticated %}
+    <p>
+      <a 
+        class="btn btn-outline-primary"
+        href="{% url 'articles:article-create' %}"
+      >
+        Create
+      </a>
+    </p>
+  {% endif %}
+
+  <p>request|length: {{ pair_attrs|length }}</p>
+  {% for key in pair_attrs %}
+    
+      <p>{{ key }}</p>
+    
+  {% endfor %}
+
+  {% for key, value in data.items %}
+    
+      <p>{{ key }}</p>
+      <p>{{ value }}</p>
+      
+  {% endfor %}
+
+
+  <p>data = {{ data }}</p>
+  <p>data.name = {{ data.name }}</p>
+  <p>data.old = {{ data.old }}</p>
+  <p>data.city = {{ data.city }}</p>
+
+  <p>iterable = {{ iterable }}</p>
+  <p>iterable.0 = '{{ iterable.0 }}'</p>
+  <p>iterable.1 = '{{ iterable.1 }}'</p>
+  <p>iterable.2 = '{{ iterable.2 }}'</p>
+  <p>iterable.3 = '{{ iterable.3 }}'</p>
+
+  <p>{{ attrs }}</p>
+  <p>{{ attrs.0 }}</p>
+  <p>{{ attrs.1 }}</p>
+
+  {% for value in attrs %}
+    <p>{{ value }}</p>
+  {% endfor %}
+
+{% endblock %} 

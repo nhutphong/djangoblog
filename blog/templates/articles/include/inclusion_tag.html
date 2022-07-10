@@ -1,0 +1,10 @@
+
+
+  {% for article in article_list %}
+    <p>{{ article.id }}
+      <a href='{{ article.get_absolute_url }}'>
+        {{ article.title }}
+      </a> 
+      {{ article.created_on|date:"l H:i:s - d/m/Y"}} 
+    </p>
+  {% endfor %}

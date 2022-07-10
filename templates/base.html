@@ -1,0 +1,36 @@
+{% load bootstrap4 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='full' %}
+<!doctype html>
+<html>
+<head>
+    
+    {% block title %}
+      
+    {% endblock title %}
+      
+</head>
+  <body>
+    <div class="container">
+      {% include 'include/navbar.html' %}
+
+      {% include 'include/messages.html' %}
+      
+      {% block content %}
+      {% endblock %} 
+      
+      {% include 'include/footer.html' %}
+    </div>
+
+    <!-- remove messages framework -->
+    <script>
+      setTimeout(function(){
+        if ($('#msg').length > 0) {
+          $('#msg').remove();
+        }
+      }, 2000)
+    </script> 
+  </body>
+</html>

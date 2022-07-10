@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load bootstrap_pagination %}
+
+{% block title %}
+<title>Search</title>
+{% endblock title %}
+
+{% block content %}
+  
+  {% for article in page_obj %}
+  <div class="card">
+    <div class="card-body">
+      <a href="{{ article.get_absolute_url }}">
+        {{ article.id }} - {{ article.title }}
+      </a>
+    </div>
+  </div>
+  {% endfor %}
+
+  <div class="d-flex justify-content-center">
+
+    {% bootstrap_paginate page_obj range=3 %}
+  </div>
+
+{% endblock %}

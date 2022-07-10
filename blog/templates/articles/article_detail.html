@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  <title>article detail</title>
+{% endblock title %}
+  
+{% block content %}
+
+<style>
+  #more {
+    display: none;
+    }
+</style>
+
+  <div class="card">
+    <div class="card-body">
+
+      <div class="collapse-content">
+
+        <h5 class="card-title">{{ article.title }}</h5>
+        <h6 class="card-subtitle mb-2 text-muted">
+          {{ article.author|title }} đăng lúc 
+          {{ article.created_on|date:"H:i d/m/Y" }}
+        </h6>
+        <!-- Text -->
+        <p class="card-text">
+          {{ article.content|slice:":100" }}
+          <span id="dots">...</span>
+          <span id="more">
+            {{ article.content|slice:"100:" }}
+
+            <img class="card-img-top" src="{{ article.picture_url }}" alt="Card image cap">
+
+          </span>
+        </p>
+        <!-- Button -->
+        <button onclick="myFunction()" class="btn btn-outline-danger" id="myBtn">
+          Read more
+        </button>
+        <!-- <label for="post-1" class="collapsed"></label> -->
+      </div>
+
+      {% if request.user.is_authenticated %}
+        
+        <a
+         class="btn btn-outline-primary" 
+         href="{% url 'articles:article-update' article.slug %}"
+         >
+          Edit
+        </a>
+
+        <a 
+          class="btn btn-outline-danger" 
+          href="{% url 'articles:article-delete' article.slug %}"
+        >
+          Delete
+        </a>
+        
+      {% endif %}
+    </div>
+  </div>
+
+  <script>
+    function myFunction() {
+      var dots = document.getElementById("dots");
+      var moreText = document.getElementById("more");
+      var btnText = document.getElementById("myBtn");
+    
+      if (dots.style.display === "none") {
+        dots.style.display = "inline";
+        btnText.innerHTML = "Read more"; 
+        moreText.style.display = "none";
+      } else {
+        dots.style.display = "none";
+        btnText.innerHTML = "Read less"; 
+        moreText.style.display = "inline";
+      }
+    }
+    </script>
+
+{% endblock %}

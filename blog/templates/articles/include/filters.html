@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load filters_tags %}  {# templatetags/filters_tags.py #}
+{% load bootstrap4 %}
+
+
+{% block title %}
+  <title>filters</title>
+{% endblock title %}
+  
+
+{% block content %}
+    
+    {% if request.user.is_authenticated %}
+      <p>
+        <a 
+          class="btn btn-outline-primary"
+          href="{% url 'articles:article-create' %}"
+        >
+          Create
+        </a>
+      </p>
+    {% endif %}
+
+    <div class="card">
+      <div class="card-body">
+        <p>
+          @register.filter: 'nguyen chi thong'|my_split:"n" return:  {{ full_name|my_split:"n" }}
+        </p>
+        <p>
+          @register.simple_tag: /{/% my_simple_tag 2 3 4 5 6 7 name='thong' old=30 /%/}<br>
+          {% my_simple_tag 2 3 4 5 6 7 name='thong' old=30 %}
+        </p>
+        
+        {% if request.user.is_authenticated %}  
+          <p>@register.inclusion_tag('articles/include/inclusion_tag.html')
+            my_inclusion_tag request -> return template
+          </p>
+          
+          <!-- call function my_inclusion_tag -->
+          {% my_inclusion_tag request %}
+        {% endif %}
+          
+
+      </div>
+    </div>
+{% endblock content %}
+  

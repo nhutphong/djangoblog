@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+  <title>product list</title>
+{% endblock title %}
+  
+{% block content %}
+
+  {% if request.user.is_authenticated %}
+      <p>
+        <a 
+          class="btn btn-outline-primary"
+          href="{% url 'products:product-create' %}"
+        >
+          Create
+        </a>
+      </p>
+    {% endif %}
+
+	{% for product in object_list %}
+	     <p>{{ product.id }} - <a href='{{ product.get_absolute_url }}'>{{ product.title }}</a></p>
+	{% endfor %}
+
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  <title>article list</title>
+{% endblock title %}
+  
+{% block content %}
+  
+  {% if request.user.is_authenticated %}
+    <p>
+      <a 
+        class="btn btn-outline-primary"
+        href="{% url 'articles:article-create' %}"
+      >
+        Create
+      </a>
+    </p>
+    
+  {% endif %}
+
+    {% for article in article_list %}
+        <p>{{ article.id }} - 
+          <a href='{{ article.get_absolute_url }}'>
+           {{ article.title }}
+          </a> 
+          auto_number: {{ auto_number }} - created_on: {{ article.created_on|date:"l H:i:s - d/m/Y"}}
+        </p>
+    {% endfor %}
+
+{% endblock %} 
