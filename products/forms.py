@@ -22,7 +22,7 @@ class ProductModelForm(forms.ModelForm):
         )
     )
 
-    # html> <name=price value=199.99>
+    # html> <name='price' value=199.99>
     price = forms.DecimalField(initial=199.99)
 
     class Meta:
