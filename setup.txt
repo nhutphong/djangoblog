@@ -1,0 +1,12 @@
+
+linux:
+    sudo service postgresql restart     # enable
+    tạo user, và 1 table cho postgreSQL
+    cấu hình user và table trong settings.py
+
+python:
+    djangoblog> source djangovenv/bin/activate     # venv
+    pip install -r requirements.txt    # install library
+
+run:
+    djangoblog> python3 manage.py runserver
