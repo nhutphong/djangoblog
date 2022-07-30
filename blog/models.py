@@ -77,12 +77,15 @@ class Article(models.Model):
             'active': self.active
         }
 
+    # đinh nghĩa thêm nhiều methods() nhưng NOT arguments, sẽ dùng ngoài template như attributes
+    # def one(self), def two(self), use template: article.one, article.two 
+
 
 
 # signals = events
-
 # pre: run dau save()
 # post: run cuoi save()
+# 
 
 
 @receiver(pre_save, sender=Article) #cach 2
@@ -112,6 +115,7 @@ def post_delete_article(sender, instance, using, **kwargs):
     )
 
 
+# run khi user da dang nhap
 @receiver(user_logged_in)
 @record_terminal(name='user_logged_in') #person
 def user_login_receiver(sender, request, user, **kwargs):
