@@ -47,7 +47,7 @@ class ArticleListView(ListView):
 
             # context_object_name =  get_context_object_name(self) #HAI.1
 
-        # END HAI
+        # END HAIcreated_on
     """
 
 
@@ -72,6 +72,7 @@ class ArticleListView(ListView):
 
         # important
         context = super().get_context_data(**kwargs)
+
         print(f"{context = }")
 
         context['today'] = timezone.now()

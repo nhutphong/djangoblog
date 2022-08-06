@@ -60,6 +60,7 @@ class Article(models.Model):
         if not self.slug:
             self.slug = slugify(self.title)
         return super().save(*args, **kwargs)
+        
     
     @property
     def picture_url(self):
