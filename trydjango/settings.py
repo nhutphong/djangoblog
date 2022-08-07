@@ -34,7 +34,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '*h*+i7yqlh8aq4f+@+par@u!)$b3y0eyum#f4j_0t8u$uor7)#'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["*"]
 
@@ -166,7 +166,6 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'), ]
 
 # lưu media upload
 MEDIA_URL = "/media/"  # url trên browser
-
 # local name trong project, tên 'media' có thể đổi tùy ý
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
@@ -186,6 +185,3 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 import dj_database_url 
 prod_db  =  dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(prod_db)
-
-# Configure Django App for Heroku.
-# django_heroku.settings(locals())
