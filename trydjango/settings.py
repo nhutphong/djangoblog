@@ -184,5 +184,5 @@ CRISPY_TEMPLATE_PACK = "bootstrap4"
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 import dj_database_url 
-prod_db  =  dj_database_url.config(conn_max_age=500)
+prod_db  =  dj_database_url.config(default='postgres://<phong>:<12341234>@localhost:5432/<trydjango>')
 DATABASES['default'].update(prod_db)
