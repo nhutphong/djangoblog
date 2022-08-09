@@ -184,7 +184,9 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'), ]
 # lưu media upload
 MEDIA_URL = "/media/"  # url trên browser
 # local name trong project, tên 'media' có thể đổi tùy ý
-MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+# MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+MEDIA_ROOT = BASE_DIR / 'media'
+
 
 # required
 LOGIN_URL = '/accounts/login/'
@@ -195,9 +197,6 @@ LOGOUT_REDIRECT_URL = '/'
 
 CRISPY_TEMPLATE_PACK = "uni_form"
 
-
-#heroku
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
 STATIC_ROOT = BASE_DIR / "staticfiles"
