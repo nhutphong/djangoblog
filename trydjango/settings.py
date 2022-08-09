@@ -54,13 +54,13 @@ if 'SECRET_KEY' in os.environ:
 if IS_HEROKU:
     ALLOWED_HOSTS = ["*"]
 else:
-    ALLOWED_HOSTS = ['*']
+    ALLOWED_HOSTS = []
 
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
 if not IS_HEROKU:
-    DEBUG = False
+    DEBUG = True
 
 
 INSTALLED_APPS = [
@@ -240,12 +240,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 
-from decouple import config
+# from decouple import config
 
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': config('dkoiew4qz', default=""),
-    'API_KEY': config('518792273977517', default=""),
-    'API_SECRET': config('5fLFA1OueUqBfgUkkbfTJJqH1yo', default=""),
-}
+# CLOUDINARY_STORAGE = {
+#     'CLOUD_NAME': config('dkoiew4qz', default=""),
+#     'API_KEY': config('518792273977517', default=""),
+#     'API_SECRET': config('5fLFA1OueUqBfgUkkbfTJJqH1yo', default=""),
+# }
 
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+# DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
