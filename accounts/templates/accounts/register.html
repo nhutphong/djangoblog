@@ -12,10 +12,13 @@
       <div class="card-body">
         <form method="POST" class="form-group">
           {% csrf_token %}
-          {{ form|crispy }}
+          
+          {# {% crispy form %} #}
+          {% crispy form 'bootstrap' %}
+
+
           <button type="submit" class="btn btn-success">Register</button>
         </form>
       </div>
     </div>
 {% endblock %}
-
