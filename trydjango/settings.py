@@ -14,6 +14,11 @@ import os
 
 from django.contrib.messages import constants as messages
 
+# At the top of the settings
+import cloudinary
+import cloudinary_storage
+
+
 # global variable messages
 MESSAGE_TAGS = {
     messages.DEBUG: 'alert-info',
@@ -69,6 +74,10 @@ INSTALLED_APPS = [
     'crispy_forms',
     'bootstrap_pagination',
     # 'django_pagination_bootstrap',
+
+    # Media Cloudinary
+    'cloudinary',
+    'cloudinary_storage',
 
 
     # app tu tao
@@ -225,3 +234,15 @@ if "CI" in os.environ:
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+
+from decouple import config
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': config('CLOUD_NAME', default=""),
+    'API_KEY': config('API_KEY', default=""),
+    'API_SECRET': config('API_SECRET', default=""),
+}
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'

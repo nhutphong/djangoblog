@@ -4,12 +4,14 @@ beautifulsoup4==4.11.1
 certifi==2022.6.15
 cfgv==3.3.1
 charset-normalizer==2.1.0
+cloudinary==1.29.0
 distlib==0.3.5
 dj-database-url==1.0.0
 Django==3.2.15
 django-bootstrap-pagination==1.7.1
 django-bootstrap-v5==1.0.11
 django-bootstrap5==21.3
+django-cloudinary-storage==0.3.0
 django-crispy-forms==1.14.0
 django-simple-tags==0.6.0
 django-upgrade==1.7.0
