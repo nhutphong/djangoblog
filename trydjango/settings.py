@@ -53,6 +53,17 @@ if 'SECRET_KEY' in os.environ:
 # Generally avoid wildcards(*). However since Heroku router provides hostname validation it is ok
 if IS_HEROKU:
     ALLOWED_HOSTS = ["*"]
+
+    # Cloudinary stuff
+    CLOUDINARY_STORAGE = {
+        'CLOUD_NAME': 'dkoiew4qz',
+        'API_KEY': '518792273977517',
+        'API_SECRET': '5fLFA1OueUqBfgUkkbfTJJqH1yo',
+    }
+
+    DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+
 else:
     ALLOWED_HOSTS = []
 
@@ -61,6 +72,8 @@ else:
 # SECURITY WARNING: don't run with debug turned on in production!
 if not IS_HEROKU:
     DEBUG = True
+else:
+    DEBUG = False
 
 
 INSTALLED_APPS = [
@@ -237,15 +250,3 @@ if "CI" in os.environ:
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-
-
-# from decouple import config
-
-# CLOUDINARY_STORAGE = {
-#     'CLOUD_NAME': config('dkoiew4qz', default=""),
-#     'API_KEY': config('518792273977517', default=""),
-#     'API_SECRET': config('5fLFA1OueUqBfgUkkbfTJJqH1yo', default=""),
-# }
-
-# DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
