@@ -59,7 +59,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # library ben thu 3
-    'bootstrap4',
+    'bootstrap5',
     'django_bootstrap5',
     'crispy_forms',
     'bootstrap_pagination',
