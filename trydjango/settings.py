@@ -87,7 +87,10 @@ INSTALLED_APPS = [
     # library ben thu 3
     'bootstrap5',
     'django_bootstrap5',
+
     'crispy_forms',
+    "crispy_bootstrap5", # new
+
     'bootstrap_pagination',
     # 'django_pagination_bootstrap',
 
@@ -95,6 +98,8 @@ INSTALLED_APPS = [
     'cloudinary',
     'cloudinary_storage',
 
+    #whitenoise static file
+    "whitenoise.runserver_nostatic",
 
     # app tu tao
     'pages',
@@ -114,6 +119,7 @@ MIDDLEWARE = [
 
     # heroku
     'django.middleware.security.SecurityMiddleware',
+    # whitenoise
     'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
@@ -123,7 +129,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         # folder templates/
-        'DIRS': [os.path.join(BASE_DIR), 'templates'],
+        'DIRS': [ BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -203,32 +209,28 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
+STATIC_URL = "/static/"
+STATICFILES_DIRS = [BASE_DIR / "static"]
+STATIC_ROOT = BASE_DIR / "staticfiles" # new
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+# STATICFILES_STORAGE ="django.contrib.staticfiles.storage.StaticFilesStorage" # new
 
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'), ]
 
 # lưu media upload
 MEDIA_URL = "/media/"  # url trên browser
 # local name trong project, tên 'media' có thể đổi tùy ý
 # MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 MEDIA_ROOT = BASE_DIR / 'media'
-
-
 # required
 LOGIN_URL = '/accounts/login/'
-
 #LoginView, LogoutView
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+# CRISPY_TEMPLATE_PACK = "bootstrap5" # new
 CRISPY_TEMPLATE_PACK = "uni_form"
-
-
-
-STATIC_ROOT = BASE_DIR / "staticfiles"
-STATIC_URL = "static/"
-
-# Enable WhiteNoise's GZip compression of static assets.
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 
 # Test Runner Config

@@ -23,7 +23,7 @@ from utils.decorators import record_terminal
 
 class PaginationListView(ListView):
     model = Article
-    template_name = 'articles/pagination_list.html'
+    template_name = 'blog/pagination_list.html'
     # queryset = Article.objects.all()
     paginate_by = 5
 
@@ -52,7 +52,7 @@ class ArticleListView(ListView):
 
 
     model = Article
-    template_name = 'articles/article_list.html'
+    template_name = 'blog/article_list.html'
     # context_object_name = 'article_list' # default 'object_list'
     # queryset = Article.objects.all()  # <blog>/<modelname>_list.html
 
@@ -95,7 +95,7 @@ class ArticleCreateView(LoginRequiredMixin, CreateView):
     # login_url = '/accounts/login/'
     # redirect_field_name = 'next'
 
-    template_name = 'articles/article_create.html'
+    template_name = 'blog/article_create.html'
     form_class = ArticleModelForm
     #success_url = '/' # = get_success_url(self)
 
@@ -114,7 +114,7 @@ class ArticleCreateView(LoginRequiredMixin, CreateView):
     
 class ArticleDetailView(DetailView):
     model = Article
-    template_name = 'articles/article_detail.html'
+    template_name = 'blog/article_detail.html'
     context_object_name = 'article' # dung ngoai template {{ article }}
     query_pk_and_slug = True
 
@@ -133,7 +133,7 @@ class ArticleUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     # login_url = '/accounts/login/'
     # redirect_field_name = 'next'
     model = Article
-    template_name = 'articles/article_create.html'
+    template_name = 'blog/article_create.html'
     form_class = ArticleModelForm
     query_pk_and_slug = True
 
@@ -164,8 +164,8 @@ class ArticleUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 @method_decorator(login_required, name='dispatch')
 class ArticleDeleteView(UserPassesTestMixin, DeleteView):
     model = Article
-    template_name = 'articles/article_delete.html'
-    # success_url = reverse_lazy('articles:article-list')
+    template_name = 'blog/article_delete.html'
+    # success_url = reverse_lazy('blog:article-list')
     query_pk_and_slug = True
 
     # raise_exception = True
@@ -181,7 +181,7 @@ class ArticleDeleteView(UserPassesTestMixin, DeleteView):
     @record_terminal("ArticleDeleteView.get_success_url")
     def get_success_url(self):
         print("Tao la get_success_url(self)")
-        return reverse('articles:article-list')
+        return reverse('blog:article-list')
     
     #UserPassesTestMixin
     @record_terminal("ArticleDeleteView.test_func")
@@ -194,7 +194,7 @@ class ArticleDeleteView(UserPassesTestMixin, DeleteView):
 class SearchResultsView(PaginationListView, ListView):
     
     model = Article
-    template_name = 'articles/search_results.html'
+    template_name = 'blog/search_results.html'
     context_object_name = 'article_list'
 
     @record_terminal("SearchResultsView.get_queryset")

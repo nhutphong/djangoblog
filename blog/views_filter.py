@@ -32,7 +32,7 @@ def attrs_request(request):
 
 
 def demo(request):
-    template = 'articles/demo/demo_view.html'
+    template = 'blog/demo/demo_view.html'
 
 
     # print(f"{pair_attrs_request(request) = }")
@@ -54,7 +54,7 @@ def demo(request):
 
 
 def filter_test(request):
-    template = 'articles/include/filters.html'
+    template = 'blog/include/filters.html'
     full_name = 'nguyen chi thong'
     context = {
         'full_name': full_name

@@ -17,7 +17,7 @@ def my_simple_tag(a, b, *args, **kwargs):
 
 
 # {% my_inclusion_tag request %} #template call
-@register.inclusion_tag('articles/include/inclusion_tag.html')
+@register.inclusion_tag('blog/include/inclusion_tag.html')
 def my_inclusion_tag(request):
     user_articles = request.user.articles.all()
     return {'article_list': user_articles}
