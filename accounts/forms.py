@@ -9,7 +9,8 @@ class RegisterForm(UserCreationForm):
         label='Username',
         max_length=100,
         min_length=5,
-        widget=forms.TextInput(attrs={'class': 'form-control'}))
+        widget=forms.TextInput(attrs={'class': 'form-control'})
+        )
 
     first_name = forms.CharField(
         max_length=30,
