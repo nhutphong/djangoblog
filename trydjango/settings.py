@@ -197,18 +197,27 @@ USE_L10N = True
 USE_TZ = True
 
 
+#url on browser /static/app-name/static/{js,css,img}/{.js,.css,.jpg}
+STATIC_URL = 'static/'
 
-STATIC_URL = "/static/"
-STATICFILES_DIRS = [BASE_DIR / "static"]
-STATIC_ROOT = BASE_DIR / "staticfiles" # new
+# add subfolder, for django scan, copy all folders, files to STATIC_ROOT='staticfiles'
+#phai manual create folder top-lever static/
+STATICFILES_DIRS = [
+    BASE_DIR / 'static'
+]
+
+#django scan copy all folders,files, in app-name/static/...  to STATIC_ROOT
+# STATIC_ROOT auto create folder 'staticfiles'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
 STATICFILES_STORAGE ="django.contrib.staticfiles.storage.StaticFilesStorage" # new
 # STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # lưu media upload
 MEDIA_URL = "/media/"  # url trên browser
 # local name trong project, tên 'media' có thể đổi tùy ý
-# MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 MEDIA_ROOT = BASE_DIR / 'media'
+
 # required
 LOGIN_URL = '/accounts/login/'
 #LoginView, LogoutView
