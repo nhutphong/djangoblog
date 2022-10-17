@@ -21,3 +21,4 @@ def my_simple_tag(a, b, *args, **kwargs):
 def my_inclusion_tag(request):
     user_articles = request.user.articles.all()
     return {'article_list': user_articles}
+    # 'article_list' passed to inclusion_tag.html'
