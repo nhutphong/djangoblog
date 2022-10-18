@@ -41,13 +41,23 @@ class ArticleListView(ListView):
         inherit tu ListView
         # cac attrs class co nhieu methods tuong ung de thuc hien nhieu logic hon
 
-        # queryset = get_queryset(self)
 
-        # def get_context_data(self, **kwargs) #START HAI
+        run 1, end 1
+        ArticleListView.get_queryset(self)
 
-            # context_object_name =  get_context_object_name(self) #HAI.1
+        run 2
+        ArticleListView.get_context_data(self, **kwargs):
+           # important
+            context = super().get_context_data(**kwargs):
+                ArticleListView.get_context_object_name(self, object_list)
+        end 2
 
-        # END HAIcreated_on
+        run 3, end 3 # class in file models.py
+        Article.get_absolute_url(self)
+
+        run 4, end 4
+        request_fineshed()      #django signal
+
     """
 
 
@@ -57,7 +67,7 @@ class ArticleListView(ListView):
     # queryset = Article.objects.all()  # <blog>/<modelname>_list.html
 
     @record_terminal('ArticleListView.get_queryset')
-    def get_queryset(self): #run 1 -> end 1
+    def get_queryset(self): #run ONE -> end ONE
         print("Tao la get_queryset(self)")
 
         queryset = super().get_queryset()
@@ -66,24 +76,24 @@ class ArticleListView(ListView):
 
     # them logic dung ngoai template {{ today }}, {{ number }}
     @record_terminal('ArticleListView.get_context_data')
-    def get_context_data(self, **kwargs): #START HAI
+    def get_context_data(self, **kwargs): #START TWO
         print("Tao la get_context_data(self, **kwargs)")
         print(f"{kwargs = }")
 
         # important
-        context = super().get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs) # CALL THREE
 
         print(f"{context = }")
 
         context['today'] = timezone.now()
         context['auto_number'] = random.randrange(1, 100)
-        return context
+        return context #END TWO
 
 
-    @record_terminal('ArticleListView.get_context_object_name')
-    def get_context_object_name(self, object_list): #run HAI.1
+    @record_terminal('ArticleListView.get_context_object_name', char='-')
+    def get_context_object_name(self, object_list): #START THREE
         print(f"{object_list = }")
-        return "article_list" # end HAI.1 -> END HAI
+        return "article_list" # END THREE -> sau do (END TWO)
         # return f"{type(object_list[0]).__name__.lower()}_list"
         
 
@@ -101,7 +111,7 @@ class ArticleCreateView(LoginRequiredMixin, CreateView):
 
 
     def form_valid(self, form):
-        print(f"ArticleCreateView.form_valid(self): form.cleaned_data: {form.cleaned_data}")
+        print(f"ArticleCreateView.form_valid(self):\n\tform.cleaned_data: {form.cleaned_data}")
 
         #update article author is current user logged
         form.instance.author = self.request.user
@@ -165,7 +175,7 @@ class ArticleUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 class ArticleDeleteView(UserPassesTestMixin, DeleteView):
     model = Article
     template_name = 'blog/article_delete.html'
-    # success_url = reverse_lazy('blog:article-list')
+    # success_url = reverse_lazy('articles:article-list')
     query_pk_and_slug = True
 
     # raise_exception = True
@@ -181,7 +191,7 @@ class ArticleDeleteView(UserPassesTestMixin, DeleteView):
     @record_terminal("ArticleDeleteView.get_success_url")
     def get_success_url(self):
         print("Tao la get_success_url(self)")
-        return reverse('blog:article-list')
+        return reverse('articles:article-list')
     
     #UserPassesTestMixin
     @record_terminal("ArticleDeleteView.test_func")
@@ -189,6 +199,7 @@ class ArticleDeleteView(UserPassesTestMixin, DeleteView):
         print("Tao la test_func(self)")
         article = self.get_object()
         return article.author == self.request.user
+        # user da login, cung phai la tac gia bai bao, moi duoc delete
 
 
 class SearchResultsView(PaginationListView, ListView):
